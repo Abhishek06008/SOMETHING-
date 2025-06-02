@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body, html {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Arial', sans-serif;
+    }
+    .slide {
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      transition: all 1s ease-in-out;
+      position: absolute;
+      top: 0;
+      left: 0;
+      padding: 1rem;
+      text-align: center;
+    }
+    #slide1 {
+      background-color: black;
+      color: white;
+      z-index: 5;
+    }
+    .candle {
+      width: 10px;
+      height: 60px;
+      background: #fff;
+      position: relative;
+      margin: 20px auto;
+      border-radius: 3px;
+    }
+    .flame {
+      width: 15px;
+      height: 15px;
+      background: orange;
+      border-radius: 50%;
+      position: absolute;
+      top: -20px;
+      left: -2px;
+      animation: flicker 0.2s infinite;
+    }
+    @keyframes flicker {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+    #message1 {
+      font-size: 1.5rem;
+      margin-top: 20px;
+      opacity: 0;
+      transition: opacity 2s;
+    }
+    #slide2 {
+      background-color: red;
+      color: white;
+      z-index: 4;
+    }
+    #messageButton {
+      font-size: 2rem;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      animation: pulse 1s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+    #slide3 {
+      background-color: pink;
+      color: black;
+      z-index: 3;
+      padding: 20px;
+      text-align: center;
+      font-size: 1.2rem;
+    }
+    #slide4 {
+      background-color: #fff0f0;
+      color: black;
+      z-index: 2;
+      font-size: 1.5rem;
+    }
+    #slide5 {
+      background-color: #87ceeb;
+      z-index: 1;
+      overflow: hidden;
+    }
+    .balloon {
+      width: 30px;
+      height: 45px;
+      background-color: red;
+      border-radius: 50% 50% 50% 50%/60% 60% 40% 40%;
+      position: absolute;
+      bottom: 0;
+      animation: float 5s infinite;
+    }
+    @keyframes float {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-100vh); }
+    }
+    .firework {
+      position: absolute;
+      bottom: 0;
+      width: 10px;
+      height: 10px;
+      background: #ff0;
+      border-radius: 50%;
+      animation: shoot 2s forwards;
+    }
+    @keyframes shoot {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-50vh); }
+      100% { transform: translateY(-60vh) scale(5); opacity: 0; }
+    }
+    #finalMessage {
+      position: absolute;
+      bottom: 10%;
+      width: 100%;
+      text-align: center;
+      font-size: 1.5rem;
+      color: white;
+      padding: 0 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div id="slide1" class="slide">
+    <div class="candle">
+      <div class="flame" id="flame"></div>
+    </div>
+    <div id="message1">Happy Birthday Beautiful ❤️</div>
+  </div>
+  <div id="slide2" class="slide" style="display:none;">
+    <button id="messageButton">💌</button>
+    <p>Touch it</p>
+  </div>
+  <div id="slide3" class="slide" style="display:none;">
+    From how I met you at that wedding to having you as my inspiration — teaching me to build my name and work hard for success. Just want to say, you mean a lot to me ☺️.
+  </div>
+  <div id="slide4" class="slide" style="display:none;">
+    Again, thank you and have a great life and success ahead.
+  </div>
+  <div id="slide5" class="slide" style="display:none;">
+    <div id="balloonContainer"></div>
+    <div id="firework" class="firework"></div>
+    <div id="finalMessage">Once Again, A Happy Birthday Shreya ❤️</div>
+  </div>
+
+  <script>
+    setTimeout(() => {
+      document.getElementById("flame").style.display = "none";
+      document.getElementById("message1").style.opacity = 1;
+      setTimeout(() => showSlide("slide2"), 2000);
+    }, 3000);
+
+    function showSlide(id) {
+      document.querySelectorAll('.slide').forEach(slide => slide.style.display = 'none');
+      document.getElementById(id).style.display = 'flex';
+    }
+
+    document.getElementById("messageButton").addEventListener("click", () => {
+      showSlide("slide3");
+      setTimeout(() => showSlide("slide4"), 4000);
+      setTimeout(() => {
+        showSlide("slide5");
+        launchBalloons();
+        launchFireworks();
+      }, 8000);
+    });
+
+    function launchBalloons() {
+      const colors = ["red", "blue", "green", "yellow", "purple", "orange", "pink", "cyan"];
+      const container = document.getElementById("balloonContainer");
+      for (let i = 0; i < 8; i++) {
+        const b = document.createElement("div");
+        b.className = "balloon";
+        b.style.left = `${i * 12 + 5}%`;
+        b.style.backgroundColor = colors[i % colors.length];
+        container.appendChild(b);
+      }
+    }
+
+    function launchFireworks() {
+      const f = document.getElementById("firework");
+      setTimeout(() => {
+        f.style.background = "linear-gradient(to top, red, yellow, blue)";
+      }, 500);
+    }
+  </script>
+</body>
+</html>
